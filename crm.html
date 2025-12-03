@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>CRM - Update Group Link</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 40px; }
+    input { width: 400px; padding: 10px; margin-bottom: 10px; }
+    button { padding: 10px 20px; }
+    #status { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Update WhatsApp Group Link</h2>
+  <input type="text" id="groupLink" placeholder="Enter new group link">
+  <br>
+  <button onclick="updateLink()">Update</button>
+  <div id="status"></div>
+
+  <script>
+    const SUPABASE_URL = "https://gcpvdftmhhkhqydtinii.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdjcHZkZnRtaGhraHF5ZHRpbmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5OTg3MTUsImV4cCI6MjA3MzU3NDcxNX0.58fy1KkigNOGogw7fM_Oycd06AuA-EP2psbtxV_Dvg0"; // replace with your anon key
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function updateLink() {
+      const link = document.getElementById('groupLink').value.trim();
+      const status = document.getElementById('status');
+
+      if (!link) {
+        status.textContent = "Please enter a link.";
+        return;
+      }
+
+      const { error } = await supabaseClient
+        .from('settings')
+        .insert([{ group_link: link }]);
+
+      if (error) {
+        console.error(error);
+        status.textContent = "Failed to update link.";
+      } else {
+        status.textContent = "✅ Link updated successfully!";
+        document.getElementById('groupLink').value = "";
+      }
+    }
+  </script>
+</body>
+</html>
