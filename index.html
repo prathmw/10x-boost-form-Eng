@@ -115,7 +115,7 @@
 
         const aiSensyData = {
           apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2M5NDFiN2I0YWMxMGJlYjhhODM2MCIsIm5hbWUiOiJERU1PIDE5dGggTm92IiwiYXBwTmFtZSI6IkFpU2Vuc3kiLCJjbGllbnRJZCI6IjY3MmRhNDQ1ZTU4N2NkMGJlZDcxZTM1MyIsImFjdGl2ZVBsYW4iOiJQUk9fTU9OVEhMWSIsImlhdCI6MTczODQwNTgyNX0.-cfSHxvF-ReV8TGNX3M65RTKo4vcpvcH9jNjSA1B8Bo",
-          campaignName: "3decv21",
+          campaignName: "10decv21",
           destination: `91${cleanPhone}`,
           userName: name,
           templateParams: [],
@@ -152,7 +152,7 @@
           });
 
           // Step 3: Get latest WhatsApp group link from Supabase
-          let redirectTo = "https://chat.whatsapp.com/KsuAmwxJwTnJzAC1YbKYeb"; // default fallback
+          let redirectTo = "https://chat.whatsapp.com/F5RNWecADt3BFtbrjMIg2U"; // default fallback
           const { data, error } = await supabaseClient
             .from('settings')
             .select('group_link')
@@ -178,5 +178,6 @@
 </body>
 
 </html>
+
 
 
