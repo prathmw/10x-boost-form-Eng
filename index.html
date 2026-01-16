@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sakal-India's Biggest 7 Day BootCamp</title>
+  <title>vedic-maths</title>
+
   <!-- CSS styles -->
   <link rel="stylesheet" href="/CSS/index.css">
   <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
@@ -15,6 +16,37 @@
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap"
     rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- ✅ ADDED (ONLY CSS FOR STATE DROPDOWN) -->
+  <style>
+    .state-container {
+      position: relative;
+    }
+
+    .state-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      z-index: 9999;
+    }
+
+    .state-option {
+      padding: 10px 12px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .state-option:hover {
+      background-color: #f2f2f2;
+    }
+  </style>
 </head>
 
 <body>
@@ -26,18 +58,18 @@
 
     <!-- hero section -->
     <div id="hero-section">
-      <h2 class="hero-h2">Sakal-India's Biggest 7 Day Bootcamp</h2>
+      <h2 class="hero-h2">vedic-maths</h2>
       <div class="hero-img">
         <img
-          src="https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/673c941b7b4ac10beb8a8360/9392822_GeminiGeneratedImagecp9l0fcp9l0fcp9l 1.png"
+          src="https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/673c941b7b4ac10beb8a8360/8579754_dfhjkl.png"
           alt="Webinar Promo Image">
       </div>
     </div>
 
     <div id="form-div">
       <form action="" method="POST" id="form">
-        <!-- user section -->
         <div id="user-section">
+
           <div class="form-group">
             <label class="label-rq" for="name">Full Name</label>
             <input type="text" id="name" placeholder="Full Name" required>
@@ -72,7 +104,17 @@
             <label class="label-rq" for="city">City</label>
             <input type="text" id="city" placeholder="Enter Your City Name" required>
           </div>
+
         </div>
+          <div class="form-group">
+            <label class="label-rq" for="State">State</label>
+            <div class="state-container">
+              <input type="text" id="State" placeholder="Search State..." autocomplete="off" required>
+              <div id="stateDropdown" class="state-dropdown"></div>
+            </div>
+          </div>
+
+
 
         <button type="button" id="submitBtn" onclick="submitForm()">Register for Webinar</button>
       </form>
@@ -83,6 +125,54 @@
       const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdjcHZkZnRtaGhraHF5ZHRpbmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5OTg3MTUsImV4cCI6MjA3MzU3NDcxNX0.58fy1KkigNOGogw7fM_Oycd06AuA-EP2psbtxV_Dvg0";
       const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+      const indianStates = [
+        "Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat",
+        "Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh",
+        "Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab",
+        "Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh",
+        "Uttarakhand","West Bengal","Andaman and Nicobar Islands","Chandigarh",
+        "Dadra and Nagar Haveli and Daman and Diu","Delhi","Jammu and Kashmir",
+        "Ladakh","Lakshadweep","Puducherry"
+      ];
+
+      /* ✅ ADDED — ONLY STATE SEARCH LOGIC */
+      const stateInput = document.getElementById("State");
+      const stateDropdown = document.getElementById("stateDropdown");
+
+      stateInput.addEventListener("input", function () {
+        const value = this.value.toLowerCase();
+        stateDropdown.innerHTML = "";
+
+        const filteredStates = indianStates.filter(s =>
+          s.toLowerCase().includes(value)
+        );
+
+        if (!filteredStates.length) {
+          stateDropdown.style.display = "none";
+          return;
+        }
+
+        filteredStates.forEach(state => {
+          const div = document.createElement("div");
+          div.className = "state-option";
+          div.textContent = state;
+          div.onclick = () => {
+            stateInput.value = state;
+            stateDropdown.style.display = "none";
+          };
+          stateDropdown.appendChild(div);
+        });
+
+        stateDropdown.style.display = "block";
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!e.target.closest(".state-container")) {
+          stateDropdown.style.display = "none";
+        }
+      });
+      /* ✅ END ADDITION */
+
       async function submitForm() {
         // Get form values
         const phone = document.getElementById('wanumber').value;
@@ -91,37 +181,37 @@
         const school = document.getElementById('reason').value;
         const schoolArea = document.getElementById('schoolArea').value;
         const className = document.getElementById('className').value;
+        const State = document.getElementById('State').value;
         const city = document.getElementById('city').value;
 
-        // Validate phone number
         const cleanPhone = phone.replace(/\D/g, '');
         if (cleanPhone.length !== 10) {
           alert('Please enter a valid 10-digit phone number');
           return false;
         }
 
-        // HERE IS THE CHANGE (Email formatted as "3rd:- ...")
         const formData = {
-          fullName: `English:- ${name}`,
+          fullName: name,
           phoneNumber: phone,
           email: email,
           schoolName: school,
           schoolArea: schoolArea,
           class: className,
+          State: State,
           city: city
         };
 
-        const scriptUrl = 'https://script.google.com/macros/s/AKfycbz2o_sJxs2Z2ChaTb_eZOIVC2Yo48aiJjSDK85_h8JF3-tv0HOW4W1XupVbFQEZd0y5gw/exec';
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycby7fgZk0D648muKwJwP2s5FDyJn7vjVg9wHbE3TNlwlNaORh3qLygwv7ZO2Ms1HNnUt/exec';
 
         const aiSensyData = {
           apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2M5NDFiN2I0YWMxMGJlYjhhODM2MCIsIm5hbWUiOiJERU1PIDE5dGggTm92IiwiYXBwTmFtZSI6IkFpU2Vuc3kiLCJjbGllbnRJZCI6IjY3MmRhNDQ1ZTU4N2NkMGJlZDcxZTM1MyIsImFjdGl2ZVBsYW4iOiJQUk9fTU9OVEhMWSIsImlhdCI6MTczODQwNTgyNX0.-cfSHxvF-ReV8TGNX3M65RTKo4vcpvcH9jNjSA1B8Bo",
-          campaignName: "bootv23",
+          campaignName: "11janv22",
           destination: `91${cleanPhone}`,
           userName: name,
           templateParams: [],
           source: "new-landing-page form",
           media: {
-            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/673c941b7b4ac10beb8a8360/9392822_GeminiGeneratedImagecp9l0fcp9l0fcp9l 1.png",
+            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/673c941b7b4ac10beb8a8360/8862500_PHOTO20250206153940.jpg",
             filename: "sample_media"
           },
           buttons: [],
@@ -136,14 +226,12 @@
         submitBtn.textContent = 'Sending...';
 
         try {
-          // Step 1: Send to AiSensy
           await fetch('https://backend.aisensy.com/campaign/t1/api/v2', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(aiSensyData)
           });
 
-          // Step 2: Send to Google Sheet
           await fetch(scriptUrl, {
             method: 'POST',
             mode: 'no-cors',
@@ -151,8 +239,7 @@
             body: JSON.stringify(formData)
           });
 
-          // Step 3: Get latest WhatsApp group link from Supabase
-          let redirectTo = "https://chat.whatsapp.com/IaTCYxu0EQRH8qsD7juHZc"; // default fallback
+          let redirectTo = "https://chat.whatsapp.com/FxasZlO0GD1FFOUnN3PvMv";
           const { data, error } = await supabaseClient
             .from('settings')
             .select('group_link')
@@ -176,20 +263,4 @@
 
   </div>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
