@@ -136,22 +136,21 @@
             };
 
             fetch('https://backend.aisensy.com/campaign/t1/api/v2', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(aiSensyData),
-            })
-              .then(() => {
-                setLoading(false);
-                  window.location.href = "https://chat.whatsapp.com/Ikc9IOffRF66w7mnmXsCQg";
-                  .then(response => response.text())
-                  .then(url => {
-                    setLoading(false);
-                    if (url && url.startsWith('http')) {
-                      window.location.href = url;
-                    } else {
-                      alert('WhatsApp link not found.');
-                    }
-                  })
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(aiSensyData),
+})
+.then(() => {
+  setLoading(false);
+
+  // ✅ Redirect to WhatsApp group
+  window.location.href = "https://chat.whatsapp.com/Ikc9IOffRF66w7mnmXsCQg";
+})
+.catch(error => {
+  setLoading(false);
+  console.error('Error:', error);
+  alert('An error occurred. Please try again.');
+});
                   .catch(() => {
                     setLoading(false);
                     alert('Could not fetch WhatsApp link.');
