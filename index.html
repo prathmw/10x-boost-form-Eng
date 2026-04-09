@@ -141,7 +141,8 @@
               body: JSON.stringify(aiSensyData),
             })
               .then(() => {
-                fetch('https://script.google.com/macros/s/AKfycbzDHfEAbNyk0aY2KmlMPkthWYDSRzsEsPTkv_nOq0z2MQOVgjAlW4o3an-Z_Eq5S5bk/exec')
+                setLoading(false);
+                  window.location.href = "https://chat.whatsapp.com/Ikc9IOffRF66w7mnmXsCQg";
                   .then(response => response.text())
                   .then(url => {
                     setLoading(false);
