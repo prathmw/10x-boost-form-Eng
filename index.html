@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
@@ -28,7 +27,7 @@
     <div id="hero-section">
       <h2 class="hero-h2">10X Memory Power Techniques - English</h2>
       <div class="hero-img">
-        <img src="https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/673c941b7b4ac10beb8a8360/1684498_1000290683 1.jpg" alt="">
+        <img src="https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/673c941b7b4ac10beb8a8360/1684498_1000290683%201.jpg" alt="">
       </div>
     </div>
 
@@ -39,38 +38,38 @@
         <div id="user-section">
 
           <div class="form-group">
-            <label for="name">Full Name</label>
+            <label>Full Name</label>
             <input type="text" id="name" placeholder="Full Name" required>
           </div>
 
           <div class="form-group">
-            <label for="wanumber">Phone Number</label>
+            <label>Phone Number</label>
             <input type="tel" id="wanumber" placeholder="Enter your WhatsApp number" required>
           </div>
 
           <div class="form-group">
-            <label for="email">Your Email Address</label>
+            <label>Email</label>
             <input type="email" id="email" placeholder="Email">
           </div>
 
           <div class="form-group">
-            <label for="reason">School Name</label>
+            <label>School Name</label>
             <textarea id="reason" placeholder="Enter School Name" required></textarea>
           </div>
 
           <div class="form-group">
-            <label for="schoolArea">School Area</label>
-            <input type="text" id="schoolArea" placeholder="Enter School Area" required>
+            <label>School Area</label>
+            <input type="text" id="schoolArea" required>
           </div>
 
           <div class="form-group">
-            <label for="className">Class</label>
-            <input type="text" id="className" placeholder="Class" required>
+            <label>Class</label>
+            <input type="text" id="className" required>
           </div>
 
           <div class="form-group">
-            <label for="city">City</label>
-            <input type="text" id="city" placeholder="Enter City" required>
+            <label>City</label>
+            <input type="text" id="city" required>
           </div>
 
         </div>
@@ -84,7 +83,6 @@
 
   </div>
 
-  <!-- SCRIPT -->
   <script>
     function setLoading(isLoading) {
       const btn = document.getElementById('submitBtn');
@@ -109,9 +107,11 @@
 
       setLoading(true);
 
+      const cleanPhone = phone.replace(/\D/g, '');
+
       const formData = {
         fullName: name,
-        phoneNumber: phone,
+        phoneNumber: cleanPhone,
         email: document.getElementById('email').value,
         schoolName: document.getElementById('reason').value,
         schoolArea: document.getElementById('schoolArea').value,
@@ -119,7 +119,7 @@
         city: document.getElementById('city').value
       };
 
-      // ✅ Save to Google Sheet
+      // ✅ Google Sheets Save
       fetch('https://script.google.com/macros/s/AKfycbzFc1XUTFZj0RkL1tvK8l2tOkkw9D683Kdht_Rq7YnbtR78BmTUsDRDNKr5S73tYGK-/exec', {
         method: 'POST',
         mode: 'no-cors',
@@ -127,18 +127,19 @@
         body: JSON.stringify(formData),
       });
 
-      // ✅ Send WhatsApp Campaign
+      // ✅ AiSensy WhatsApp API
       const aiSensyData = {
-          apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5M2FjNTZiNDMwZjRkMGQ4OWE2N2RlMyIsIm5hbWUiOiJQQURITyBJTkRJQSBDTFVCIiwiYXBwTmFtZSI6IkFpU2Vuc3kiLCJjbGllbnRJZCI6IjY3MmRhNDQ1ZTU4N2NkMGJlZDcxZTM1MyIsImFjdGl2ZVBsYW4iOiJGUkVFX0ZPUkVWRVIiLCJpYXQiOjE3NjU0NTkzMDd9.9jx0SMynu-kuzazRs9KI4Sds_sEI5QzRO0U_hngWG20",
-          campaignName: "memoryv23",
-          destination: `91${cleanPhone}`,
-          userName: name,
-          templateParams: [],
-          source: "new-landing-page form",
-          media: {
-            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/693ac56b430f4d0d89a67de3/5727258_IMG20251127WA00001.jpg",
-            filename: "sample_media"
-          },
+        apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5M2FjNTZiNDMwZjRkMGQ4OWE2N2RlMyIsIm5hbWUiOiJQQURITyBJTkRJQSBDTFVCIiwiYXBwTmFtZSI6IkFpU2Vuc3kiLCJjbGllbnRJZCI6IjY3MmRhNDQ1ZTU4N2NkMGJlZDcxZTM1MyIsImFjdGl2ZVBsYW4iOiJGUkVFX0ZPUkVWRVIiLCJpYXQiOjE3NjU0NTkzMDd9.9jx0SMynu-kuzazRs9KI4Sds_sEI5QzRO0U_hngWG20",
+        campaignName: "memoryv23",
+        destination: `91${cleanPhone}`,
+        userName: name,
+        templateParams: [],
+        source: "new-landing-page form",
+        media: {
+          url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/693ac56b430f4d0d89a67de3/5727258_IMG20251127WA00001.jpg",
+          filename: "sample_media"
+        }
+      };
 
       fetch('https://backend.aisensy.com/campaign/t1/api/v2', {
         method: 'POST',
@@ -147,8 +148,6 @@
       })
       .then(() => {
         setLoading(false);
-
-        // ✅ FINAL REDIRECT (FIXED)
         window.location.href = "https://chat.whatsapp.com/Ikc9IOffRF66w7mnmXsCQg";
       })
       .catch(() => {
