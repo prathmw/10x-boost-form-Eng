@@ -119,10 +119,36 @@
         setLoading(false);
         window.location.href = "https://chat.whatsapp.com/K64Pk3rbifp6Wz8WX9RzuR?s=cl&p=a&ilr=1";
       })
-      .catch(() => {
-        setLoading(false);
-        alert('Something went wrong. Please try again.');
-      });
+      .then(() => {
+  setLoading(false);
+
+  // Default Zoom link
+  let redirectUrl = "https://chat.whatsapp.com/K64Pk3rbifp6Wz8WX9RzuR?s=cl&p=a&ilr=1";
+
+  const now = new Date();
+  const day = now.getDay(); // Sunday = 0
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+  // Sunday 10:45 AM - 12:30 PM
+  const morningStart = 10 * 60 + 45;
+  const morningEnd = 12 * 60 + 30;
+
+  // Sunday 6:45 PM - 8:30 PM
+  const eveningStart = 18 * 60 + 45;
+  const eveningEnd = 20 * 60 + 30;
+
+  if (
+    day === 0 &&
+    (
+      (currentMinutes >= morningStart && currentMinutes <= morningEnd) ||
+      (currentMinutes >= eveningStart && currentMinutes <= eveningEnd)
+    )
+  ) {
+    redirectUrl = "https://us02web.zoom.us/j/84620905267?pwd=KPaRoOD2Qfbza1VRftSAM6jBIxVXhz.1";
+  }
+
+  window.location.href = redirectUrl;
+})
     }
   </script>
 </body>
