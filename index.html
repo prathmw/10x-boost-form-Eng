@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>10X Memory Power Techniques - English</title>
-  <link rel="stylesheet" href="/CSS/index.css">
-  <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -68,6 +68,7 @@
       btn.textContent = isLoading ? 'Loading...' : 'Register for Webinar';
       btn.disabled = isLoading;
     }
+
     function submitForm() {
       const name = document.getElementById('name').value.trim();
       const phone = document.getElementById('wanumber').value.trim();
@@ -90,14 +91,16 @@
         class: document.getElementById('className').value,
         city: document.getElementById('city').value
       };
-      // ✅ Google Sheets Save
+
+      // Save to Google Sheets (no-cors POST)
       fetch('https://script.google.com/macros/s/AKfycbzFc1XUTFZj0RkL1tvK8l2tOkkw9D683Kdht_Rq7YnbtR78BmTUsDRDNKr5S73tYGK-/exec', {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
-      });
-      // ✅ AiSensy WhatsApp API
+      }).catch(() => {/* ignore no-cors errors */});
+
+      // AiSensy WhatsApp API payload
       const aiSensyData = {
         apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5M2FjNTZiNDMwZjRkMGQ4OWE2N2RlMyIsIm5hbWUiOiJQQURITyBJTkRJQSBDTFVCIiwiYXBwTmFtZSI6IkFpU2Vuc3kiLCJjbGllbnRJZCI6IjY3MmRhNDQ1ZTU4N2NkMGJlZDcxZTM1MyIsImFjdGl2ZVBsYW4iOiJGUkVFX0ZPUkVWRVIiLCJpYXQiOjE3NjU0NTkzMDd9.9jx0SMynu-kuzazRs9KI4Sds_sEI5QzRO0U_hngWG20",
         campaignName: "reminder_v22v20_xiu46_dxu07",
@@ -105,34 +108,26 @@
         userName: name,
         templateParams: ["Sunday, 9 August 2026"],
         source: "new-landing-page form",
-        media: {url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/693ac56b430f4d0d89a67de3/1064283_1000290683%201.jpg",
-         filename: "sample_media"
-          }
+        media: {
+          url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/693ac56b430f4d0d89a67de3/1064283_1000290683%201.jpg",
+          filename: "sample_media"
         }
       };
+
       fetch('https://backend.aisensy.com/campaign/t1/api/v2', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(aiSensyData),
       })
-       .then(() => {
+      .then(() => {
         setLoading(false);
         window.location.href = "https://chat.whatsapp.com/E99a4EVzrOh6iqqnBxIJPW?s=cl&p=a&ilr=1";
       })
-    
+      .catch(() => {
+        setLoading(false);
+        alert('Registration failed. Please try again.');
+      });
+    }
   </script>
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>10X Memory Power Techniques - English</title>
-  <link rel="stylesheet" href="/CSS/index.css">
-  <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<body>
